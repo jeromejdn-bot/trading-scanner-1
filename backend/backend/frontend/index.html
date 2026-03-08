@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Trading Scanner</title>
+
+<style>
+body{
+font-family:Arial;
+background:#111;
+color:white;
+padding:40px;
+}
+
+input,button{
+padding:10px;
+margin:5px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>Trading Signal Scanner</h2>
+
+<input id="symbol" placeholder="Enter symbol like TSLA">
+<button onclick="scan()">Scan</button>
+
+<div id="result"></div>
+
+<script>
+
+async function scan(){
+
+let symbol=document.getElementById("symbol").value;
+
+let response=await fetch("http://localhost:8000/scan/"+symbol);
+
+let data=await response.json();
+
+document.getElementById("result").innerHTML=`
+
+<p>Symbol: ${data.symbol}</p>
+<p>Signal: ${data.signal}</p>
+<p>Entry: ${data.entry}</p>
+<p>Stop Loss: ${data.stop_loss}</p>
+<p>Target: ${data.target}</p>
+<p>Confidence: ${data.confidence}%</p>
+
+`;
+
+}
+
+</script>
+
+</body>
+</html>
